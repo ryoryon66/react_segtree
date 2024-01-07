@@ -96,7 +96,7 @@ function App() {
       <h1>Segment Tree Demonstration</h1>
       <div className="query-input">
         <h2>Query</h2>
-        Query the sum of the range 
+        Query the {{"add":"sum","mul":"product","max":"maximum"}[op]} of the range 
         [
         <input type="number" name="left" value={query[0]} onChange={handleQueryChange}/>
         ,
