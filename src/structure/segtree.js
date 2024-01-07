@@ -35,7 +35,7 @@ class SegTree {
     }
 
     query(l,r,reset=true){
-        console.log("query",l,r,reset);
+        // console.log("query",l,r,reset);
         if (reset) this.reset_conditions();
         return this._query(l,r,1,0,this.n);
     }

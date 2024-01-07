@@ -19,7 +19,7 @@ function SegBlock(props) {
             {segtree.array[node_index]}
         </div>
 
-        console.log(node_index,"is updated");
+        // console.log(node_index,"is updated");
     }
 
     if (segtree.is_used[node_index]) {
@@ -34,7 +34,6 @@ function SegBlock(props) {
             {item}
 
             <div className="seg-same-level">
-
                 <SegBlock segtree={segtree} node_index={2*node_index}/>
                 <SegBlock segtree={segtree} node_index={2*node_index+1}/>
             </div>

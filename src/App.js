@@ -13,7 +13,6 @@ for (let i = 0; i < N; i++) {
 }
 
 
-
 function App() {
 
 
@@ -30,7 +29,7 @@ function App() {
   } 
 
   const handleQueryChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let value = parseInt(e.target.value);
     let is_left = e.target.name === "left";
 
@@ -50,7 +49,7 @@ function App() {
   }
 
   const handleArrayChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     let index = parseInt(e.target.name);
     let val = parseInt(e.target.value);
 
@@ -75,10 +74,6 @@ function App() {
     let new_op = e.target.value;
     setOp(new_op);
 
-    console.log(new_op);
-
-
-
     let new_tree = null;
     if (new_op === "add") new_tree = new SegTree(N,(a,b)=>a+b,0);
     else if (new_op === "mul") new_tree = new SegTree(N,(a,b)=>a*b,1);
@@ -96,16 +91,11 @@ function App() {
   }
   
 
-
-
   return (
     <div className="App">
       <h1>Segment Tree Demonstration</h1>
-
-
       <div className="query-input">
         <h2>Query</h2>
-        <p> Put your query here </p>
         Query the sum of the range 
         [
         <input type="number" name="left" value={query[0]} onChange={handleQueryChange}/>
@@ -119,8 +109,6 @@ function App() {
         <h2>Query Result</h2>
         <p>{query_result}</p>
       </div>
-
-
 
       <div className='array'>
         <h2>Array</h2>
@@ -141,19 +129,27 @@ function App() {
       </div>
 
       <div className="setop">
-        <h2>Set Operation</h2>
-        <p>Set the operation</p>
-        {/* radio */}
-        <input type="radio" name="op" value="add" onChange={handleOpChange} checked={op==="add"}/>Addition
-        <input type="radio" name="op" value="mul" onChange={handleOpChange} checked={op==="mul"}/>Multiplication
-        <input type="radio" name="op" value="max" onChange={handleOpChange} checked={op==="max"}/>Maximum
+        <h2>Change the Operation</h2>
+        <label>
+          <input type="radio" name="op" value="add" onChange={handleOpChange} checked={op === "add"}/>
+          Addition
+        </label>
+
+        <label>
+          <input type="radio" name="op" value="mul" onChange={handleOpChange} checked={op === "mul"}/>
+          Multiplication
+        </label>
+
+        <label>
+          <input type="radio" name="op" value="max" onChange={handleOpChange} checked={op === "max"}/>
+          Maximum
+        </label>
       </div>
-
-
 
       <div className="footer">
         <p>Created by <a href="https://github.com/ryoryon66">ryoryon66</a></p>
       </div>
+
     </div>
 
 
