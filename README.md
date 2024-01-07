@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
-デプロイの時にはnpm run deployをする。
+- デプロイ先url
+  - [https://ryoryon66.github.io/react_segtree/](https://ryoryon66.github.io/react_segtree/)
+
+デプロイの時には`npm run deploy`をする。
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
