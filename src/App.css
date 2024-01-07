@@ -1,38 +1,114 @@
+* {
+    box-sizing: border-box;
+    background-color: #eaeaea;
+}
+
+button {
+    background-color: #555; /* 灰色の背景 */
+    color: white; /* 白色のテキスト */
+    padding: 10px 15px; /* トップとボトムのパディング10px、左右のパディング15px */
+    border: none; /* 境界線なし */
+    border-radius: 5px; /* 角を丸く */
+    cursor: pointer; /* ホバー時のカーソルを手の形に */
+    font-size: 16px; /* フォントサイズの調整 */
+    margin: 10px; /* マージン */
+    transition: background-color 0.3s, box-shadow 0.3s; /* 背景色と影のアニメーション */
+}
+
+button:hover {
+    background-color: #3c3c3c; /* ホバー時の背景色を少し暗く */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* ホバー時の影 */
+}
+
+button:active {
+    background-color: #2a2a2a; /* アクティブ時の背景色をさらに暗く */
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); /* アクティブ時の影を小さく */
+}
+
+
 .App {
-  text-align: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif; /* フォントの変更 */
+    padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc; /* 境界線を少し暗めに */
+    border-radius: 4px; /* 角を丸く */
+    background-color: #fff; /* 白色の背景 */
+    color: #333; /* 濃い文字色 */
+    margin: 5px;
+    padding: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.array-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.array-item{
+    width: 50px;
+    text-align: center;
+    border: 0;
+    border-radius: 0;
+    background-color: #f5f5f5;
+    color: #000;
+    margin: 0;
+    padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
+
+
+.seg-same-level{
+    display: flex;
+    flex-direction: row;
+    width : 100%;
+    margin : 0;
+    padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.seg-item {
+    text-align: center;
+    border: 2px solid gray; /* 緑色の境界線 */
+    background-color: #f5f5f5; /* 軽い灰色の背景 */
+    margin: 5px;
+    padding: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* やや暗めの影 */
 }
+
+.seg-block{
+    display: flex;
+    flex-direction: column;
+    width : 100%;
+    margin : 0;
+    padding: 0;
+}
+
+.is-used{
+    background-color: #aaa;
+    color: #000;
+}
+
+.is-updated{
+    background-color: #aaa;
+    color: #000;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center; /* テキストを中央揃えに */
+    font-size: 14px; /* フォントサイズを設定 */
+    position: absolute; /* フッターをページの下部に固定 */
+    bottom: 0;
+    width: 100%;
+}
+
+
+
+
