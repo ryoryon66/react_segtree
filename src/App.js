@@ -28,8 +28,8 @@ function App() {
     content.push(tree.get(i));
   } 
 
-  const handleQueryChange = (e) => {
-    // console.log(e.target.value);
+  const handleQueryChange = (e) => { 
+    console.log(e.target.value);
     let value = parseInt(e.target.value);
     let is_left = e.target.name === "left";
 
