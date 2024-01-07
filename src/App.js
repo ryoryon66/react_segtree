@@ -21,40 +21,47 @@ function App() {
   const [query, setQuery] = useState([0,N]);
   const [query_result, setQueryResult] = useState(segtree.query(query[0],query[1]));
   const [tree, setTree] = useState(segtree);
-  const [op, setOp] = useState("add");
+
 
   let content = [];
   for (let i = 0; i < N; i++) {
     content.push(tree.get(i));
+  } 
+
+  const handleQueryChange = (e) => {
+    console.log(e.target.value);
+    let value = parseInt(e.target.value);
+    let is_left = e.target.name == "left";
+
+    let new_query;
+
+    if (is_left) {
+      new_query = [value,query[1]];
+      setQuery([value,query[1]]);
+
+    }
+    else {
+      new_query = [query[0],value];
+      setQuery([query[0],value]);
+    }
+
+    setQueryResult(tree.query(new_query[0],new_query[1]));
   }
 
-  const handleOperationChange = (e) => {
-    const new_op = e.target.value;
-    // let array = [];
-    // for (let i = 0; i < N; i++) {
-    //   array.push(tree.get(i));
-    // }
-    
-    let new_tree;
+  const handleArrayChange = (e) => {
+    console.log(e.target.value);
+    let index = parseInt(e.target.name);
+    let val = parseInt(e.target.value);
 
-    if (new_op === "add") {
-      new_tree = new SegTree(N,(a,b)=>a+b,0);
-    } else if (new_op === "mul") {
-      new_tree = new SegTree(N,(a,b)=>a*b,1);
-    } else if (new_op === "max") {
-      new_tree = new SegTree(N,(a,b)=>Math.max(a,b),-Infinity);
-    } else {
-      console.log("error");
-    }
-
+    let new_tree = new SegTree(N,(a,b)=>a+b,0);
     for (let i = 0; i < N; i++) {
-      new_tree.update(i,Math.floor(Math.random()*10));
+      new_tree.update(i,tree.get(i));
     }
 
-    setTree(new_tree);
-    setQueryResult(new_tree.query(query[0],query[1]));
 
-    setOp(new_op);
+    new_tree.update(index,val);
+    setTree(new_tree);
+    setQueryResult(tree.query(query[0],query[1],false));
 
   }
 
@@ -71,9 +78,9 @@ function App() {
         <p> Put your query here </p>
         Query the sum of the range 
         [
-        <input type="number" name="query" value={query[0]} onChange={(e)=>{setQuery([parseInt(e.target.value),query[1]]);setQueryResult(tree.query(parseInt(e.target.value),query[1]));setTree(tree)}}/>
+        <input type="number" name="left" value={query[0]} onChange={handleQueryChange}/>
         ,
-        <input type="number" name="query" value={query[1]} onChange={(e)=>{setQuery([query[0],parseInt(e.target.value)]);setQueryResult(tree.query(query[0],parseInt(e.target.value)));setTree(tree)}}/>
+        <input type="number" name="right" value={query[1]} onChange={handleQueryChange}/>
         )
         <br/>
       </div>
@@ -90,7 +97,7 @@ function App() {
         <div className="array-items">
           {
             content.map((value,index)=>{
-              return <input type="Number" name="query" value={tree.get(index)} onChange={(e)=>{tree.update(index,parseInt(e.target.value));setQueryResult(tree.query(query[0],query[1]));setTree(tree);console.log(op)}}/>
+              return <input type="Number" name={index} value={value} onChange={handleArrayChange}/>
             })
           }
 
@@ -102,7 +109,6 @@ function App() {
         <h2>Segment Tree Visualization</h2>
       <SegBlock segtree={tree} node_index={1} className="seg-block"/>
       </div>
-
 
 
 

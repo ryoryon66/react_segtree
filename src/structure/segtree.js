@@ -27,14 +27,16 @@ class SegTree {
             this.array[i] = this.op(this.array[2*i],this.array[2*i+1]);
             this.is_updated[i] = true;
         }
+        // console.log(this.is_updated);
     }
 
     get(i){
         return this.array[i+this.n];
     }
 
-    query(l,r){
-        this.reset_conditions();
+    query(l,r,reset=true){
+        console.log("query",l,r,reset);
+        if (reset) this.reset_conditions();
         return this._query(l,r,1,0,this.n);
     }
 

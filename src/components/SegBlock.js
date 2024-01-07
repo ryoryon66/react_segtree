@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 function SegBlock(props) {
 
@@ -11,10 +10,16 @@ function SegBlock(props) {
         {segtree.array[node_index]}
     </div>;
 
+    // console.log(node_index,segtree.array[node_index]);
+    // console.log(segtree.is_updated[node_index]);
+    // console.log(segtree.is_updated);
+
     if (segtree.is_updated[node_index]) {
         item = <div className="seg-item is-updated">
             {segtree.array[node_index]}
         </div>
+
+        console.log(node_index,"is updated");
     }
 
     if (segtree.is_used[node_index]) {
