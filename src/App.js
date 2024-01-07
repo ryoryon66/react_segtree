@@ -21,6 +21,7 @@ function App() {
   const [query, setQuery] = useState([0,N]);
   const [query_result, setQueryResult] = useState(segtree.query(query[0],query[1]));
   const [tree, setTree] = useState(segtree);
+  const [op, setOp] = useState("add");
 
 
   let content = [];
@@ -31,7 +32,7 @@ function App() {
   const handleQueryChange = (e) => {
     console.log(e.target.value);
     let value = parseInt(e.target.value);
-    let is_left = e.target.name == "left";
+    let is_left = e.target.name === "left";
 
     let new_query;
 
@@ -53,7 +54,12 @@ function App() {
     let index = parseInt(e.target.name);
     let val = parseInt(e.target.value);
 
-    let new_tree = new SegTree(N,(a,b)=>a+b,0);
+    let new_tree = null;
+    if (op === "add") new_tree = new SegTree(N,(a,b)=>a+b,0);
+    else if (op === "mul") new_tree = new SegTree(N,(a,b)=>a*b,1);
+    else if (op === "max") new_tree = new SegTree(N,(a,b)=>Math.max(a,b),-Infinity);
+    else console.log("error");
+
     for (let i = 0; i < N; i++) {
       new_tree.update(i,tree.get(i));
     }
@@ -61,10 +67,34 @@ function App() {
 
     new_tree.update(index,val);
     setTree(new_tree);
-    setQueryResult(tree.query(query[0],query[1],false));
+    setQueryResult(new_tree.query(query[0],query[1],false));
 
   }
 
+  const handleOpChange = (e) => {
+    let new_op = e.target.value;
+    setOp(new_op);
+
+    console.log(new_op);
+
+
+
+    let new_tree = null;
+    if (new_op === "add") new_tree = new SegTree(N,(a,b)=>a+b,0);
+    else if (new_op === "mul") new_tree = new SegTree(N,(a,b)=>a*b,1);
+    else if (new_op === "max") new_tree = new SegTree(N,(a,b)=>Math.max(a,b),-Infinity);
+    else console.log("error");
+
+    for (let i = 0; i < N; i++) {
+      new_tree.update(i,Math.floor(Math.random()*10));
+    }
+
+
+    setTree(new_tree);
+    setQueryResult(new_tree.query(query[0],query[1],false));
+
+  }
+  
 
 
 
@@ -108,6 +138,15 @@ function App() {
       <div className="segtree">
         <h2>Segment Tree Visualization</h2>
       <SegBlock segtree={tree} node_index={1} className="seg-block"/>
+      </div>
+
+      <div className="setop">
+        <h2>Set Operation</h2>
+        <p>Set the operation</p>
+        {/* radio */}
+        <input type="radio" name="op" value="add" onChange={handleOpChange} checked={op==="add"}/>Addition
+        <input type="radio" name="op" value="mul" onChange={handleOpChange} checked={op==="mul"}/>Multiplication
+        <input type="radio" name="op" value="max" onChange={handleOpChange} checked={op==="max"}/>Maximum
       </div>
 
 
