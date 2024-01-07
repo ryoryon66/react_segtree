@@ -112,6 +112,7 @@ function App() {
 
       <div className='array'>
         <h2>Array</h2>
+        <p> 0-indexed array of length {N} </p>
         <div className="array-items">
           {
             content.map((value,index)=>{
