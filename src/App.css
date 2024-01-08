@@ -11,7 +11,7 @@ button {
     border-radius: 5px; /* 角を丸く */
     cursor: pointer; /* ホバー時のカーソルを手の形に */
     font-size: 16px; /* フォントサイズの調整 */
-    margin: 10px; /* マージン */
+    margin: 0px 10px; /* マージン */
     transition: background-color 0.3s, box-shadow 0.3s; /* 背景色と影のアニメーション */
 }
 

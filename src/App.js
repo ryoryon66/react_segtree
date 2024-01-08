@@ -157,10 +157,13 @@ function App() {
           <input type="radio" name="op" value="max" onChange={handleOpChange} checked={op === "max"}/>
           {t('maximum')}
         </label>
-      </div>
+      </div> 
 
-      <button onClick={() => changeLanguage('en')}>English</button>
-      <button onClick={() => changeLanguage('jp')}>日本語</button>
+      <div className="language">
+        <h2>{t('Change the Language')}</h2>
+        <button onClick={() => changeLanguage('en')}>English</button>
+        <button onClick={() => changeLanguage('jp')}>日本語</button>
+      </div>
 
 
       <div className="footer">
