@@ -3,6 +3,8 @@ import './App.css';
 import SegTree from './structure/segtree';
 import SegBlock from './components/SegBlock';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from './i18n';
 
 const N = 16;
 
@@ -14,6 +16,14 @@ for (let i = 0; i < N; i++) {
 
 
 function App() {
+
+  const {t, i18n} = useTranslation();
+
+  // Function to change language
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
+
 
 
 
@@ -93,10 +103,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Segment Tree Demonstration</h1>
+      <h1>{t('segment_tree_demo')}</h1>
       <div className="query-input">
-        <h2>Query</h2>
-        Query the {{"add":"sum","mul":"product","max":"maximum"}[op]} of the range 
+        <h2>{t('Query')}</h2>
+        {t('query_range')} 
         [
         <input type="number" name="left" value={query[0]} onChange={handleQueryChange}/>
         ,
@@ -106,13 +116,14 @@ function App() {
       </div>
 
       <div className="query-result">
-        <h2>Query Result</h2>
+        <h2>{t('Query Result')}</h2>
         <p>{query_result}</p>
       </div>
 
       <div className='array'>
-        <h2>Array</h2>
-        <p> 0-indexed array of length {N} </p>
+        <h2>{t('Array')}</h2>
+        <p> {t('array_description')} {N} </p>
+        <p> {t('You can change the value of the array by changing the number below.')} </p>
         <div className="array-items">
           {
             content.map((value,index)=>{
@@ -125,27 +136,32 @@ function App() {
       </div>
   
       <div className="segtree">
-        <h2>Segment Tree Visualization</h2>
+        <h2>{t('Segment Tree Visualization')}</h2>
+        <p>{t('how to read')}</p>
       <SegBlock segtree={tree} node_index={1} className="seg-block"/>
       </div>
 
       <div className="setop">
-        <h2>Change the Operation</h2>
+        <h2>{t('Change the Operation')}</h2>
         <label>
           <input type="radio" name="op" value="add" onChange={handleOpChange} checked={op === "add"}/>
-          Addition
+          {t('addition')}
         </label>
 
         <label>
           <input type="radio" name="op" value="mul" onChange={handleOpChange} checked={op === "mul"}/>
-          Multiplication
+          {t('multiplication')}
         </label>
 
         <label>
           <input type="radio" name="op" value="max" onChange={handleOpChange} checked={op === "max"}/>
-          Maximum
+          {t('maximum')}
         </label>
       </div>
+
+      <button onClick={() => changeLanguage('en')}>English</button>
+      <button onClick={() => changeLanguage('jp')}>日本語</button>
+
 
       <div className="footer">
         <p>Created by <a href="https://github.com/ryoryon66">ryoryon66</a></p>

@@ -1,0 +1,22 @@
+{
+    "segment_tree_demo": "セグメントツリーのデモンストレーション",
+
+    "Query": "クエリ",
+    "query_range": "クエリ範囲:",
+
+    "Query Result": "クエリ結果",
+
+
+    "Array": "配列",
+    "array_description": "0-indexed配列: 長さ",
+    "You can change the value of the array by changing the number below.": "下の数字を変更することで配列の値を変更できます。",
+
+    "Segment Tree Visualization": "セグメントツリーの可視化",
+    "how to read": "木の葉ノードは配列の要素です。内部ノードは、指定された演算を子ノードに適用した結果です。根ノードは、演算を配列全体に適用した結果です。",
+    
+    "Change the Operation": "演算の変更",
+    "addition": "加算",
+    "multiplication": "乗算",
+    "maximum": "最大値"
+  }
+  
