@@ -115,8 +115,8 @@ input[type="radio"] {
     padding: 20px;
     text-align: center; /* テキストを中央揃えに */
     font-size: 14px; /* フォントサイズを設定 */
-    position: absolute; /* フッターをページの下部に固定 */
-    bottom: 0;
+    /* position: absolute; フッターをページの下部に固定 */
+    /* bottom: 0; */
     width: 100%;
 }
 
