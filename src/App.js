@@ -5,21 +5,38 @@ import SegBlock from './components/SegBlock';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from './i18n';
+import { type } from '@testing-library/user-event/dist/type';
 
-const N = 16;
+const initialN = 16;
 
-let segtree = new SegTree(N,(a,b)=>a+b,0);
+let initialArray = new Array(2 * initialN).fill(0);
 
-for (let i = 0; i < N; i++) {
-  segtree.update(i,Math.floor(Math.random()*10));
+
+for (let i = 0; i < initialN; i++) {
+  initialArray[i+initialN] = Math.floor(Math.random()*10);
 }
+
+
+let segtree = new SegTree(
+  initialN,
+  (a,b)=>a+b,
+  0,
+  initialArray,
+  new Array(2*initialN).fill(false),
+  new Array(2*initialN).fill(false),
+
+);
+
+segtree = segtree.changeOp("add");
+
+
 
 
 function App() {
 
   const {t, i18n} = useTranslation();
 
-  // Function to change language
+
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
@@ -27,10 +44,13 @@ function App() {
 
 
 
-  const [query, setQuery] = useState([0,N]);
-  const [query_result, setQueryResult] = useState(segtree.query(query[0],query[1]));
+  const [query, setQuery] = useState([0,initialN]);
+  const [query_result, setQueryResult] = useState(segtree.query(0,initialN)[0]);
   const [tree, setTree] = useState(segtree);
   const [op, setOp] = useState("add");
+  const [N, setN] = useState(initialN); 
+
+
 
 
   let content = [];
@@ -40,6 +60,9 @@ function App() {
 
   const handleQueryChange = (e) => { 
     console.log(e.target.value);
+
+
+
     let value = parseInt(e.target.value);
     let is_left = e.target.name === "left";
 
@@ -55,7 +78,24 @@ function App() {
       setQuery([query[0],value]);
     }
 
-    setQueryResult(tree.query(new_query[0],new_query[1]));
+
+    if (isNaN(new_query[0]) || isNaN(new_query[1])) {
+      setQueryResult(NaN);
+      return;
+    }
+
+
+    let res = tree.query(new_query[0],new_query[1]);
+
+    let query_result = res[0];
+    let is_used = res[1];
+    let is_updated = new Array(2*N).fill(false);
+    let array = tree.array.slice();
+    let new_tree = new SegTree(N,(a,b)=>a+b,0,array ,is_updated,is_used);
+
+
+    setTree(new_tree);
+    setQueryResult(query_result);
   }
 
   const handleArrayChange = (e) => {
@@ -63,41 +103,45 @@ function App() {
     let index = parseInt(e.target.name);
     let val = parseInt(e.target.value);
 
-    let new_tree = null;
-    if (op === "add") new_tree = new SegTree(N,(a,b)=>a+b,0);
-    else if (op === "mul") new_tree = new SegTree(N,(a,b)=>a*b,1);
-    else if (op === "max") new_tree = new SegTree(N,(a,b)=>Math.max(a,b),-Infinity);
-    else console.log("error");
+    // console.log (index,val);
 
-    for (let i = 0; i < N; i++) {
-      new_tree.update(i,tree.get(i));
-    }
+    let new_tree = tree.update(index,val);
 
-
-    new_tree.update(index,val);
     setTree(new_tree);
-    setQueryResult(new_tree.query(query[0],query[1],false));
+
+    if (isNaN(query[0]) || isNaN(query[1])) return;
+    let res = new_tree.query(query[0],query[1]);
+    let query_result = res[0];
+    setQueryResult(query_result);
 
   }
 
   const handleOpChange = (e) => {
-    let new_op = e.target.value;
-    setOp(new_op);
+    let new_opcode = e.target.value;
+    setOp(new_opcode);
 
-    let new_tree = null;
-    if (new_op === "add") new_tree = new SegTree(N,(a,b)=>a+b,0);
-    else if (new_op === "mul") new_tree = new SegTree(N,(a,b)=>a*b,1);
-    else if (new_op === "max") new_tree = new SegTree(N,(a,b)=>Math.max(a,b),-Infinity);
-    else console.log("error");
-
-    for (let i = 0; i < N; i++) {
-      new_tree.update(i,Math.floor(Math.random()*10));
-    }
-
+    let new_tree = tree.changeOp(new_opcode);
 
     setTree(new_tree);
-    setQueryResult(new_tree.query(query[0],query[1],false));
 
+    let res = new_tree.query(query[0],query[1]);
+    let query_result = res[0];
+    setQueryResult(query_result);
+
+  }
+
+
+
+  const handleNChange = (e) => {
+    let new_N = parseInt(e.target.value);
+    setN(new_N);
+
+    let new_tree = tree.change_num_elems(new_N);
+
+    setTree(new_tree);
+    setQuery([0,new_N]);
+    setQueryResult(new_tree.query(0,new_N)[0]);
+    return;
   }
   
 
@@ -117,7 +161,8 @@ function App() {
 
       <div className="query-result">
         <h2>{t('Query Result')}</h2>
-        <p>{query_result}</p>
+        <p>{(query_result)}</p>
+
       </div>
 
       <div className='array'>
@@ -127,7 +172,7 @@ function App() {
         <div className="array-items">
           {
             content.map((value,index)=>{
-              return <input type="Number" name={index} value={value} onChange={handleArrayChange}/>
+              return <input type="Number" name={index} value={value} key={index} onChange={handleArrayChange}/>
             })
           }
 
@@ -158,6 +203,33 @@ function App() {
           {t('maximum')}
         </label>
       </div> 
+
+
+      <div className="setn">
+        <h2>{t('Change the Size of the Array')}</h2>
+        <p>{t('array_description')} {N} </p>
+        {/* use radio bottun. choose from 2,4,8,16,32 */}
+        <label>
+          <input type="radio" name="n" value="2" onChange={handleNChange} checked={N === 2}/>
+          2
+        </label>
+        <label>
+          <input type="radio" name="n" value="4" onChange={handleNChange} checked={N === 4}/>
+          4
+        </label>
+        <label>
+          <input type="radio" name="n" value="8" onChange={handleNChange} checked={N === 8}/>
+          8
+        </label>
+        <label>
+          <input type="radio" name="n" value="16" onChange={handleNChange} checked={N === 16}/>
+          16
+        </label>
+        <label>
+          <input type="radio" name="n" value="32" onChange={handleNChange} checked={N === 32}/>
+          32
+        </label>
+      </div>
 
       <div className="language">
         <h2>{t('Change the Language')}</h2>

@@ -10,9 +10,7 @@ function SegBlock(props) {
         {segtree.array[node_index]}
     </div>;
 
-    // console.log(node_index,segtree.array[node_index]);
-    // console.log(segtree.is_updated[node_index]);
-    // console.log(segtree.is_updated);
+
 
     if (segtree.is_updated[node_index]) {
         item = <div className="seg-item is-updated">
@@ -23,6 +21,9 @@ function SegBlock(props) {
     }
 
     if (segtree.is_used[node_index]) {
+        // assertion
+
+        
         item = <div className="seg-item is-used">
             {segtree.array[node_index]}
         </div>
