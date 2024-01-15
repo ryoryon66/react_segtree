@@ -13,7 +13,7 @@
     "zero_indexed_array_of_length": "0-indexed array of length",
 
     "Segment Tree Visualization": "Segment Tree Visualization",
-    "how to read": "The leaf nodes of the tree are the elements of the array. The internal nodes are the result of applying the specified peration to the children. The root node is the result of applying the operation to the entire array.",
+    "how to read": "The leaf nodes of the tree are the elements of the array. The internal nodes are the result of applying the specified operation to the children. The root node is the result of applying the operation to the entire array.",
 
     "Change the Operation": "Change the Operation",
     "addition": "Addition",
